@@ -52,27 +52,22 @@ namespace ToDo
             {
                 Console.WriteLine("Ingrese el número de la tarea a remover: ");
                 // Show current taks
-                for (int i = 0; i < TaskList.Count; i++)
-                {
-                    Console.WriteLine((i + 1) + ". " + TaskList[i]);
-                }
-                Console.WriteLine("----------------------------------------");
+                ShowTaskList();
 
                 string taskIndex = Console.ReadLine();
                 // Remove one position
                 int indexToRemove = Convert.ToInt32(taskIndex) - 1;
-                if (indexToRemove > -1)
+                if (indexToRemove > -1 && TaskList.Count > 0)
                 {
-                    if (TaskList.Count > 0)
-                    {
                         string task = TaskList[indexToRemove];
                         TaskList.RemoveAt(indexToRemove);
                         Console.WriteLine("Tarea " + task + " eliminada");
-                    }
+                    
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message); 
             }
         }
 
@@ -99,10 +94,8 @@ namespace ToDo
             else
             {
                 Console.WriteLine("----------------------------------------");
-                for (int i = 0; i < TaskList.Count; i++)
-                {
-                    Console.WriteLine((i + 1) + ". " + TaskList[i]);
-                }
+                int index = 0;
+                TaskList.ForEach(p => Console.WriteLine(index++ + ". " + p));
                 Console.WriteLine("----------------------------------------");
             }
         }
