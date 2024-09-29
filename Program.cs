@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace ToDo
 {
@@ -52,22 +53,31 @@ namespace ToDo
             {
                 Console.WriteLine("Ingrese el número de la tarea a remover: ");
                 // Show current taks
-                ShowTaskList();
+                ShowMenuTaskList();
 
                 string taskIndex = Console.ReadLine();
                 // Remove one position
                 int indexToRemove = Convert.ToInt32(taskIndex) - 1;
-                if (indexToRemove > -1 && TaskList.Count > 0)
+
+                if(indexToRemove > (TaskList.Count -1) || indexToRemove < 0)
                 {
-                        string task = TaskList[indexToRemove];
-                        TaskList.RemoveAt(indexToRemove);
-                        Console.WriteLine("Tarea " + task + " eliminada");
-                    
+                    Console.WriteLine("El número de tarea seleccionado es invalido");
                 }
+                else
+                {
+                    if (indexToRemove > -1 && TaskList.Count > 0)
+                    {
+                            string task = TaskList[indexToRemove];
+                            TaskList.RemoveAt(indexToRemove);
+                            Console.WriteLine("Tarea " + task + " eliminada");
+                    
+                    }
+                }
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message); 
+                Console.WriteLine("Ha ocurrido un error al eliminar la tarea."); 
             }
         }
 
@@ -77,11 +87,19 @@ namespace ToDo
             {
                 Console.WriteLine("Ingrese el nombre de la tarea: ");
                 string task = Console.ReadLine();
-                TaskList.Add(task);
-                Console.WriteLine("Tarea registrada");
+                if (task.Equals(""))
+                {
+                    Console.WriteLine("Por favor ingrese una tarea válida");
+                }
+                else
+                {
+                    TaskList.Add(task);
+                    Console.WriteLine("Tarea registrada");
+                }
             }
             catch (Exception)
             {
+                Console.WriteLine("Ha ocurrido un error");
             }
         }
 
@@ -94,7 +112,7 @@ namespace ToDo
             else
             {
                 Console.WriteLine("----------------------------------------");
-                int index = 0;
+                int index = 1;
                 TaskList.ForEach(p => Console.WriteLine(index++ + ". " + p));
                 Console.WriteLine("----------------------------------------");
             }
